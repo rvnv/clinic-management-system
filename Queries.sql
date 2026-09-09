@@ -56,10 +56,6 @@ CREATE TABLE payments (
 
 -- USE clinic_management;
 
-INSERT INTO users
-(username, password, full_name, role, status)
-VALUES
-('admin', 'admin123', 'Clinic Admin', 'Admin', 'Active');
 
 SELECT * FROM users;
 
@@ -76,28 +72,6 @@ FROM users
 WHERE username = 'reception';
 SELECT * FROM DOCTORS;
 
-INSERT INTO users
-(username, password, full_name, role, status)
-VALUES
-('reception', 'reception123', 'Priya Reception', 'Receptionist', 'Active');
-
-
-
-USE clinic_management;
-
-SELECT DATABASE();
-
-SELECT
-    user_id,
-    username,
-    password,
-    full_name,
-    role,
-    status
-FROM users
-WHERE username = 'reception'
-  AND password = 'reception123'
-  AND status = 'Active';
   
 SELECT * FROM appointments;
 
@@ -114,12 +88,6 @@ select * from users;
 select * from patients;
 select * from appointments;
 SELECT * from payments;
-
-
-SELECT user_id, username, full_name, role
-FROM users
-WHERE username = 'admin' AND password = 'admin123' AND status = 'Active';
-
 
 SELECT
                 d.doctor_id,

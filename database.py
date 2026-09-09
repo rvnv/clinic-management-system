@@ -30,9 +30,9 @@ class DatabaseManager:
                     "root"
                 ),
 
-                password=os.environ.get(
+               password=os.environ.get(
                     "MYSQLPASSWORD",
-                    "ramesh123"
+                    ""
                 ),
 
                 database=os.environ.get(
