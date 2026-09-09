@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Doctor - Clinic Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        .header-right a {
+            color: white;
+            text-decoration: none;
+            background: #6c757d;
+            padding: 8px 14px;
+            border-radius: 5px;
+        }
+
+        .header-right a:hover {
+            background: #5a6268;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 850px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #1f3c88;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            color: #1f3c88;
+            font-size: 18px;
+            margin-bottom: 20px;
+
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #d9534f;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+            font-size: 14px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1f3c88;
+            box-shadow: 0 0 0 2px rgba(31, 60, 136, 0.1);
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+
+            background: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .info-box {
+            background: #eef3ff;
+            border-left: 5px solid #1f3c88;
+
+            padding: 15px;
+            margin-bottom: 25px;
+
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+
+            margin-top: 25px;
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            border: none;
+            border-radius: 5px;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #1f3c88;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #162e68;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+
+            .button-row .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>Clinic Management System</h1>
+
+        <div class="header-right">
+
+            <span>
+                {{ session["full_name"] }}
+                ({{ session["role"] }})
+            </span>
+
+            <a href="{{ url_for('doctors') }}">
+                Back to Doctors
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+        <div class="page-title">
+
+            <h2>Add Doctor</h2>
+
+            <p>
+                Create a new doctor account and doctor profile.
+            </p>
+
+        </div>
+
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="message {% if category == 'error' %}error{% endif %}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- INFORMATION -->
+        <div class="info-box">
+
+            <strong>Doctor Account Information</strong>
+
+            <br>
+
+            A doctor requires both:
+
+            <strong>Login Account</strong>
+
+            and
+
+            <strong>Doctor Profile</strong>.
+
+            The username and password will be used by the doctor to log in
+            to the clinic management system.
+
+        </div>
+
+
+        <!-- FORM -->
+        <div class="form-card">
+
+            <form method="POST"
+                  action="{{ url_for('add_doctor') }}">
+
+                <!-- ACCOUNT DETAILS -->
+                <div class="section-title">
+                    Doctor Login Account
+                </div>
+
+
+                <div class="form-row">
+
+                    <!-- USERNAME -->
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter username"
+                            maxlength="50"
+                            required
+                        >
+
+                        <div class="help-text">
+                            Username must be unique.
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter password"
+                            maxlength="255"
+                            required
+                        >
+
+                        <div class="help-text">
+                            Password is required for doctor login.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FULL NAME -->
+                <div class="form-group">
+
+                    <label for="full_name">
+                        Doctor Full Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="full_name"
+                        name="full_name"
+                        placeholder="Enter doctor's full name"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DOCTOR DETAILS -->
+                <div class="section-title">
+                    Doctor Professional Details
+                </div>
+
+
+                <!-- SPECIALIZATION -->
+                <div class="form-group">
+
+                    <label for="specialization">
+                        Specialization
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="specialization"
+                        name="specialization"
+                        placeholder="Example: Cardiology"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONSULTATION FEE -->
+                <div class="form-group">
+
+                    <label for="consultation_fee">
+                        Consultation Fee
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="consultation_fee"
+                        name="consultation_fee"
+                        placeholder="Enter consultation fee"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                    <div class="help-text">
+                        Enter the fee charged for a doctor consultation.
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+                <div class="button-row">
+
+                    <a href="{{ url_for('doctors') }}"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Add Doctor
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- BASIC CLIENT-SIDE VALIDATION -->
+    <script>
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value.trim();
+
+            const fullName =
+                document.getElementById("full_name").value.trim();
+
+            const specialization =
+                document.getElementById("specialization").value.trim();
+
+            const fee =
+                document.getElementById("consultation_fee").value;
+
+
+            if (username === "") {
+                alert("Please enter username.");
+                event.preventDefault();
+                return;
+            }
+
+
+            if (password === "") {
+                alert("Please enter password.");
+                event.preventDefault();
+                return;
+            }
+
+
+            if (fullName === "") {
+                alert("Please enter doctor's full name.");
+                event.preventDefault();
+                return;
+            }
+
+
+            if (specialization === "") {
+                alert("Please enter specialization.");
+                event.preventDefault();
+                return;
+            }
+
+
+            if (fee === "" || parseFloat(fee) < 0) {
+                alert("Please enter a valid consultation fee.");
+                event.preventDefault();
+                return;
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

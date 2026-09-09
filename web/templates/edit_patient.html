@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Patient - Clinic Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        .header {
+            background: #1f3c88;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        .header-right a {
+            color: white;
+            text-decoration: none;
+            background: #6c757d;
+            padding: 8px 14px;
+            border-radius: 5px;
+        }
+
+        .header-right a:hover {
+            background: #5a6268;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 800px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #1f3c88;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            color: #1f3c88;
+            font-size: 18px;
+
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #d9534f;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+            font-size: 14px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+
+            border-color: #1f3c88;
+
+            box-shadow:
+                0 0 0 2px rgba(31, 60, 136, 0.1);
+        }
+
+        input[readonly] {
+            background: #f1f3f5;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .patient-id-box {
+            display: inline-block;
+
+            background: #e9ecef;
+
+            padding: 6px 10px;
+
+            border-radius: 4px;
+
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .info-box {
+            background: #eef3ff;
+
+            border-left: 5px solid #1f3c88;
+
+            padding: 15px;
+
+            margin-bottom: 25px;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .message {
+            padding: 12px 15px;
+
+            border-radius: 5px;
+
+            margin-bottom: 20px;
+
+            background: #dff0d8;
+            color: #3c763d;
+
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+
+            border-color: #f5c6cb;
+        }
+
+        .button-row {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #1f3c88;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #162e68;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+
+            .button-row .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>Clinic Management System</h1>
+
+        <div class="header-right">
+
+            <span>
+                {{ session["full_name"] }}
+                ({{ session["role"] }})
+            </span>
+
+            <a href="{{ url_for('patients') }}">
+                Back to Patients
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+        <div class="page-title">
+
+            <h2>Edit Patient</h2>
+
+            <p>
+                Update the patient's personal information.
+            </p>
+
+        </div>
+
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="message
+                        {% if category == 'error' %}
+                            error
+                        {% endif %}
+                    ">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- INFORMATION -->
+        <div class="info-box">
+
+            <strong>Patient ID:</strong>
+
+            <span class="patient-id-box">
+                {{ patient[0] }}
+            </span>
+
+            <br><br>
+
+            Update the patient's name, phone number and gender.
+            The Patient ID cannot be changed.
+
+        </div>
+
+
+        <!-- FORM -->
+        <div class="form-card">
+
+            <form method="POST"
+                  action="{{ url_for(
+                      'edit_patient',
+                      patient_id=patient[0]
+                  ) }}">
+
+                <!-- PATIENT INFORMATION -->
+                <div class="section-title">
+                    Patient Information
+                </div>
+
+
+                <!-- PATIENT NAME -->
+                <div class="form-group">
+
+                    <label for="patient_name">
+
+                        Patient Name
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="patient_name"
+                        name="patient_name"
+                        value="{{ patient[1] }}"
+                        maxlength="100"
+                        placeholder="Enter patient name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+                <div class="form-group">
+
+                    <label for="phone">
+
+                        Phone Number
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value="{{ patient[2] }}"
+                        maxlength="15"
+                        placeholder="Enter phone number"
+                        required
+                    >
+
+                    <div class="help-text">
+                        Phone number must be unique for each patient.
+                    </div>
+
+                </div>
+
+
+                <!-- GENDER -->
+                <div class="form-group">
+
+                    <label for="gender">
+
+                        Gender
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <select
+                        id="gender"
+                        name="gender"
+                        required
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option
+                            value="Male"
+                            {% if patient[3] == "Male" %}
+                                selected
+                            {% endif %}
+                        >
+                            Male
+                        </option>
+
+                        <option
+                            value="Female"
+                            {% if patient[3] == "Female" %}
+                                selected
+                            {% endif %}
+                        >
+                            Female
+                        </option>
+
+                        <option
+                            value="Other"
+                            {% if patient[3] == "Other" %}
+                                selected
+                            {% endif %}
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+                <div class="button-row">
+
+                    <a
+                        href="{{ url_for('patients') }}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- CLIENT-SIDE VALIDATION -->
+    <script>
+
+        document
+            .querySelector("form")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    const patientName =
+                        document
+                            .getElementById("patient_name")
+                            .value
+                            .trim();
+
+                    const phone =
+                        document
+                            .getElementById("phone")
+                            .value
+                            .trim();
+
+                    const gender =
+                        document
+                            .getElementById("gender")
+                            .value;
+
+
+                    if (patientName === "") {
+
+                        alert(
+                            "Please enter patient name."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+                    }
+
+
+                    if (phone === "") {
+
+                        alert(
+                            "Please enter phone number."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+                    }
+
+
+                    /*
+                     * Basic phone validation.
+                     *
+                     * Allows digits and an optional
+                     * + at the beginning.
+                     */
+                    const phonePattern =
+                        /^\+?[0-9]{7,15}$/;
+
+
+                    if (!phonePattern.test(phone)) {
+
+                        alert(
+                            "Please enter a valid phone number."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+                    }
+
+
+                    if (gender === "") {
+
+                        alert(
+                            "Please select gender."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+</html>

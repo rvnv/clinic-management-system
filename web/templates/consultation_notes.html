@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Consultation Notes - Clinic Management System
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+
+            background: #1f3c88;
+
+            color: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .header h1 {
+
+            font-size: 24px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .header-right a {
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            padding: 8px 14px;
+
+            border-radius: 5px;
+        }
+
+
+        .header-right a:hover {
+
+            background: #5a6268;
+        }
+
+
+        /* =========================
+           CONTAINER
+           ========================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 950px;
+
+            margin: 35px auto;
+        }
+
+
+        /* =========================
+           TITLE
+           ========================= */
+
+        .page-title {
+
+            margin-bottom: 20px;
+        }
+
+
+        .page-title h2 {
+
+            color: #1f3c88;
+
+            margin-bottom: 5px;
+        }
+
+
+        .page-title p {
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           MESSAGE
+           ========================= */
+
+        .message {
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            background: #dff0d8;
+
+            color: #3c763d;
+
+            border: 1px solid #c3e6cb;
+        }
+
+
+        .error {
+
+            background: #f8d7da;
+
+            color: #721c24;
+
+            border-color: #f5c6cb;
+        }
+
+
+        /* =========================
+           INFO BOX
+           ========================= */
+
+        .info-box {
+
+            background: white;
+
+            border-left: 5px solid #1f3c88;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.08);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           APPOINTMENT CARD
+           ========================= */
+
+        .appointment-card {
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .section-title {
+
+            color: #1f3c88;
+
+            font-size: 18px;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 8px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        /* =========================
+           DETAILS GRID
+           ========================= */
+
+        .details-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px 25px;
+        }
+
+
+        .detail-item {
+
+            padding: 10px 0;
+        }
+
+
+        .detail-label {
+
+            font-size: 12px;
+
+            color: #777;
+
+            margin-bottom: 5px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+        }
+
+
+        .detail-value {
+
+            font-size: 15px;
+
+            color: #333;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           STATUS
+           ========================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 12px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .status-scheduled {
+
+            background: #d9edf7;
+
+            color: #31708f;
+        }
+
+
+        .status-completed {
+
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+
+        .status-cancelled {
+
+            background: #f8d7da;
+
+            color: #721c24;
+        }
+
+
+        /* =========================
+           NOTES CARD
+           ========================= */
+
+        .notes-card {
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 220px;
+
+            padding: 13px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            resize: vertical;
+        }
+
+
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #1f3c88;
+
+            box-shadow:
+                0 0 0 2px rgba(31, 60, 136, 0.1);
+        }
+
+
+        .help-text {
+
+            font-size: 12px;
+
+            color: #777;
+
+            margin-top: 6px;
+        }
+
+
+        .counter {
+
+            text-align: right;
+
+            font-size: 12px;
+
+            color: #777;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           BUTTONS
+           ========================= */
+
+        .button-row {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .btn-primary {
+
+            background: #1f3c88;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+
+            background: #162e68;
+        }
+
+
+        .btn-secondary {
+
+            background: #6c757d;
+
+            color: white;
+        }
+
+
+        .btn-secondary:hover {
+
+            background: #5a6268;
+        }
+
+
+        /* =========================
+           WARNING
+           ========================= */
+
+        .warning-box {
+
+            background: #fff3cd;
+
+            border: 1px solid #ffeeba;
+
+            color: #856404;
+
+            padding: 14px 15px;
+
+            border-radius: 5px;
+
+            margin-bottom: 20px;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+
+
+            .details-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 10px;
+            }
+
+
+            .appointment-card,
+            .notes-card {
+
+                padding: 20px;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+
+            .button-row .btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <div class="header">
+
+        <h1>
+            Clinic Management System
+        </h1>
+
+
+        <div class="header-right">
+
+            <span>
+
+                {{ session["full_name"] }}
+
+                ({{ session["role"] }})
+
+            </span>
+
+
+            <a href="{{ url_for('my_appointments') }}">
+
+                My Appointments
+
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+         ===================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================
+             PAGE TITLE
+             ================================= -->
+
+        <div class="page-title">
+
+            <h2>
+                Consultation Notes
+            </h2>
+
+            <p>
+                Record clinical notes for the selected
+                patient appointment.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================
+             FLASH MESSAGES
+             ================================= -->
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="
+                            message
+                            {% if category == 'error' %}
+                                error
+                            {% endif %}
+                        "
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- =================================
+             APPOINTMENT DETAILS
+             ================================= -->
+
+        <div class="appointment-card">
+
+
+            <div class="section-title">
+
+                Appointment Details
+
+            </div>
+
+
+
+            <div class="details-grid">
+
+
+                <!-- APPOINTMENT ID -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Appointment ID
+                    </div>
+
+                    <div class="detail-value">
+                        {{ appointment[0] }}
+                    </div>
+
+                </div>
+
+
+
+                <!-- PATIENT -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Patient
+                    </div>
+
+                    <div class="detail-value">
+                        {{ appointment[1] }}
+                    </div>
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Phone
+                    </div>
+
+                    <div class="detail-value">
+                        {{ appointment[2] }}
+                    </div>
+
+                </div>
+
+
+
+                <!-- DATE -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Appointment Date
+                    </div>
+
+                    <div class="detail-value">
+                        {{ appointment[3] }}
+                    </div>
+
+                </div>
+
+
+
+                <!-- TIME -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Appointment Time
+                    </div>
+
+                    <div class="detail-value">
+                        {{ appointment[4] }}
+                    </div>
+
+                </div>
+
+
+
+                <!-- REASON -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Reason for Visit
+                    </div>
+
+                    <div class="detail-value">
+
+                        {% if appointment[5] %}
+
+                            {{ appointment[5] }}
+
+                        {% else %}
+
+                            <span style="color:#999;">
+                                Not specified
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="detail-item">
+
+                    <div class="detail-label">
+                        Status
+                    </div>
+
+                    <div class="detail-value">
+
+
+                        {% if appointment[6] == "Scheduled" %}
+
+                            <span
+                                class="
+                                    status
+                                    status-scheduled
+                                "
+                            >
+                                Scheduled
+                            </span>
+
+
+                        {% elif appointment[6] == "Completed" %}
+
+                            <span
+                                class="
+                                    status
+                                    status-completed
+                                "
+                            >
+                                Completed
+                            </span>
+
+
+                        {% elif appointment[6] == "Cancelled" %}
+
+                            <span
+                                class="
+                                    status
+                                    status-cancelled
+                                "
+                            >
+                                Cancelled
+                            </span>
+
+
+                        {% else %}
+
+                            <span class="status">
+
+                                {{ appointment[6] }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             CANCELLED WARNING
+             ================================= -->
+
+        {% if appointment[6] == "Cancelled" %}
+
+            <div class="warning-box">
+
+                <strong>Cancelled Appointment</strong>
+
+                <br>
+
+                Consultation notes cannot be added to
+                a cancelled appointment.
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================
+                 NOTES FORM
+                 ================================= -->
+
+            <div class="notes-card">
+
+
+                <div class="section-title">
+
+                    Consultation Notes
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'consultation_notes',
+                        appointment_id=appointment[0]
+                    ) }}"
+                    id="notesForm"
+                >
+
+
+                    <textarea
+                        id="consultation_notes"
+                        name="consultation_notes"
+                        maxlength="5000"
+                        placeholder="Enter consultation notes..."
+                        required
+                    >{{ appointment[7] or "" }}</textarea>
+
+
+                    <div class="help-text">
+
+                        Record relevant consultation details,
+                        observations, diagnosis information,
+                        recommendations or follow-up instructions.
+
+                    </div>
+
+
+                    <div
+                        id="notesCounter"
+                        class="counter"
+                    >
+
+                        0 / 5000 characters
+
+                    </div>
+
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="button-row">
+
+
+                        <a
+                            href="{{ url_for(
+                                'my_appointments'
+                            ) }}"
+                            class="btn btn-secondary"
+                        >
+
+                            Cancel
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            Save Consultation Notes
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+         ===================================== -->
+
+    <script>
+
+
+        const notes =
+            document.getElementById(
+                "consultation_notes"
+            );
+
+
+        const counter =
+            document.getElementById(
+                "notesCounter"
+            );
+
+
+        /*
+         * Update character counter.
+         */
+
+        function updateCounter() {
+
+            if (!notes || !counter) {
+
+                return;
+
+            }
+
+
+            counter.textContent =
+                notes.value.length +
+                " / 5000 characters";
+        }
+
+
+        if (notes) {
+
+            updateCounter();
+
+
+            notes.addEventListener(
+                "input",
+                updateCounter
+            );
+
+        }
+
+
+
+        /*
+         * Client-side form validation.
+         */
+
+        const form =
+            document.getElementById(
+                "notesForm"
+            );
+
+
+        if (form) {
+
+            form.addEventListener(
+                "submit",
+                function(event) {
+
+                    const value =
+                        notes.value.trim();
+
+
+                    if (value === "") {
+
+                        alert(
+                            "Please enter consultation notes."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+
+                    if (value.length > 5000) {
+
+                        alert(
+                            "Consultation notes cannot exceed 5000 characters."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

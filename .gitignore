@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+
+.venv/
+venv/
+env/
+
+.env
+
+doctor_report.csv
+monthly_clinic_report.csv
+revenue_report.csv
+today_appointments.csv
+patient_history.csv
+
+*.log

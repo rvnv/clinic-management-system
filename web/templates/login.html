@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Login - Clinic Management
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(31, 60, 136, 0.16),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(20, 130, 120, 0.16),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 85%,
+            rgba(31, 60, 136, 0.12),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #eef5fb 0%,
+            #f6fbff 45%,
+            #eaf7f5 100%
+        );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* =====================================
+   DECORATIVE BACKGROUND
+   ===================================== */
+
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* Large blue circle */
+
+body::before {
+    width: 420px;
+    height: 420px;
+
+    top: -180px;
+    left: -150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(31, 60, 136, 0.16),
+            rgba(31, 60, 136, 0.03) 65%,
+            transparent 70%
+        );
+
+    filter: blur(2px);
+}
+
+
+/* Large teal circle */
+
+body::after {
+    width: 500px;
+    height: 500px;
+
+    right: -220px;
+    bottom: -220px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(20, 130, 120, 0.16),
+            rgba(20, 130, 120, 0.03) 65%,
+            transparent 70%
+        );
+
+    filter: blur(2px);
+}
+
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            padding: 20px;
+        }
+
+
+        .login-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, 0.10);
+        }
+
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .brand-icon {
+
+            width: 64px;
+
+            height: 64px;
+
+            margin: 0 auto 15px;
+
+            background: #0f766e;
+
+            border-radius: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+
+        .brand h1 {
+
+            margin: 0;
+
+            font-size: 25px;
+        }
+
+
+        .brand p {
+
+            margin-top: 8px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #334155;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 15px;
+        }
+
+
+        input:focus {
+
+            border-color: #0f766e;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(15, 118, 110, 0.12);
+        }
+
+
+        .login-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #0f766e;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .login-btn:hover {
+
+            background: #115e59;
+        }
+
+
+        .flash-container {
+
+            margin-bottom: 20px;
+        }
+
+
+        .flash {
+
+            padding: 13px 14px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .flash-error {
+
+            color: #991b1b;
+
+            background: #fee2e2;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        .flash-success {
+
+            color: #166534;
+
+            background: #dcfce7;
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+
+        .footer {
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            margin-top: 22px;
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-card {
+
+                padding: 28px 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <div class="login-card">
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🏥
+                </div>
+
+                <h1>
+                    Clinic Management
+                </h1>
+
+                <p>
+                    Clinic Appointment Management System
+                </p>
+
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(
+                with_categories=true
+            ) %}
+
+                {% if messages %}
+
+                    <div class="flash-container">
+
+                        {% for category, message in messages %}
+
+                            <div
+                                class="
+                                    flash
+                                    flash-{{ category }}
+                                "
+                            >
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('login') }}"
+            >
+
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        required
+                        autofocus
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <div class="footer">
+
+                Clinic Appointment Management System
+
+                <br>
+
+                Python • Flask • MySQL
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Add Patient - Clinic Management
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f1f5f9;
+
+            color: #0f172a;
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .header {
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .brand-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            background: #0f766e;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 26px;
+        }
+
+
+        .brand-name {
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        .user-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .user-info {
+
+            text-align: right;
+        }
+
+
+        .user-name {
+
+            font-size: 17px;
+
+            font-weight: bold;
+        }
+
+
+        .user-role {
+
+            font-size: 13px;
+
+            color: #cbd5e1;
+
+            margin-top: 3px;
+        }
+
+
+        .logout-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #334155;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .logout-btn:hover {
+
+            background: #475569;
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .container {
+
+            max-width: 900px;
+
+            margin: 50px auto;
+
+            padding: 0 25px;
+        }
+
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .page-title h1 {
+
+            margin: 0;
+
+            font-size: 34px;
+        }
+
+
+        .page-title p {
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        .back-link {
+
+            text-decoration: none;
+
+            color: #0f766e;
+
+            font-weight: bold;
+        }
+
+
+        /* =================================================
+           FORM CARD
+        ================================================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15, 23, 42, 0.08);
+
+            padding: 35px;
+        }
+
+
+        .card-title {
+
+            margin-top: 0;
+
+            margin-bottom: 28px;
+
+            font-size: 22px;
+        }
+
+
+        /* =================================================
+           FORM
+        ================================================= */
+
+        .form-group {
+
+            margin-bottom: 22px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #334155;
+        }
+
+
+        .form-control {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .form-control:focus {
+
+            border-color: #0f766e;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(15, 118, 110, 0.12);
+        }
+
+
+        select.form-control {
+
+            background: white;
+        }
+
+
+        /* =================================================
+           BUTTONS
+        ================================================= */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+
+        .btn {
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            border: none;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+        }
+
+
+        .btn-primary {
+
+            background: #0f766e;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+
+            background: #115e59;
+        }
+
+
+        .btn-secondary {
+
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+
+        .btn-secondary:hover {
+
+            background: #cbd5e1;
+        }
+
+
+        /* =================================================
+           FLASH
+        ================================================= */
+
+        .flash-container {
+
+            margin-bottom: 20px;
+        }
+
+
+        .flash {
+
+            padding: 14px 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 10px;
+
+            font-size: 15px;
+        }
+
+
+        .flash-success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+
+        .flash-error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                padding: 15px 20px;
+            }
+
+
+            .brand-name {
+
+                font-size: 20px;
+            }
+
+
+            .user-info {
+
+                display: none;
+            }
+
+
+            .container {
+
+                margin-top: 30px;
+            }
+
+
+            .page-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .card {
+
+                padding: 25px 20px;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+
+            .btn {
+
+                text-align: center;
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏥
+            </div>
+
+            <div class="brand-name">
+                Clinic Management
+            </div>
+
+        </div>
+
+
+        <div class="user-area">
+
+            <div class="user-info">
+
+                <div class="user-name">
+                    {{ session["full_name"] }}
+                </div>
+
+                <div class="user-role">
+                    {{ session["role"] }}
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <main class="container">
+
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Add New Patient
+                </h1>
+
+                <p>
+                    Register a new patient in the clinic.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('patients') }}"
+                class="back-link"
+            >
+                ← Back to Patients
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================= -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="
+                                flash
+                                flash-{{ category }}
+                            "
+                        >
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             FORM
+        ================================================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                Patient Details
+            </h2>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('add_patient') }}"
+            >
+
+
+                <!-- PATIENT NAME -->
+
+                <div class="form-group">
+
+                    <label for="patient_name">
+                        Patient Name
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="patient_name"
+                        name="patient_name"
+                        class="form-control"
+                        placeholder="Enter patient name"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        class="form-control"
+                        placeholder="Enter phone number"
+                        maxlength="15"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- GENDER -->
+
+                <div class="form-group">
+
+                    <label for="gender">
+                        Gender
+                    </label>
+
+
+                    <select
+                        id="gender"
+                        name="gender"
+                        class="form-control"
+                        required
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-row">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Add Patient
+                    </button>
+
+
+                    <a
+                        href="{{ url_for('patients') }}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

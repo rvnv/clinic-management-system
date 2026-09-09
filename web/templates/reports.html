@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Reports - Clinic Management System
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+
+            background: #1f3c88;
+
+            color: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .header h1 {
+
+            font-size: 24px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .header-right a {
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            padding: 8px 14px;
+
+            border-radius: 5px;
+        }
+
+
+        .header-right a:hover {
+
+            background: #5a6268;
+        }
+
+
+        /* =========================
+           CONTAINER
+           ========================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1150px;
+
+            margin: 35px auto;
+        }
+
+
+        /* =========================
+           TITLE
+           ========================= */
+
+        .page-title {
+
+            margin-bottom: 20px;
+        }
+
+
+        .page-title h2 {
+
+            color: #1f3c88;
+
+            margin-bottom: 5px;
+        }
+
+
+        .page-title p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           FLASH MESSAGE
+           ========================= */
+
+        .message {
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            background: #dff0d8;
+
+            color: #3c763d;
+
+            border: 1px solid #c3e6cb;
+        }
+
+
+        .error {
+
+            background: #f8d7da;
+
+            color: #721c24;
+
+            border-color: #f5c6cb;
+        }
+
+
+        /* =========================
+           INFO BOX
+           ========================= */
+
+        .info-box {
+
+            background: white;
+
+            border-left: 5px solid #1f3c88;
+
+            padding: 16px;
+
+            margin-bottom: 25px;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.08);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           REPORT GRID
+           ========================= */
+
+        .report-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           REPORT CARD
+           ========================= */
+
+        .report-card {
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-height: 220px;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .report-card:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 14px rgba(0, 0, 0, 0.12);
+        }
+
+
+        /* =========================
+           REPORT ICON
+           ========================= */
+
+        .report-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 8px;
+
+            background: #eef3ff;
+
+            color: #1f3c88;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           REPORT CONTENT
+           ========================= */
+
+        .report-card h3 {
+
+            color: #1f3c88;
+
+            font-size: 18px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .report-card p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            flex: 1;
+        }
+
+
+        .filename {
+
+            margin-top: 12px;
+
+            margin-bottom: 15px;
+
+            background: #f8f9fa;
+
+            border: 1px solid #e1e4e8;
+
+            border-radius: 4px;
+
+            padding: 8px 10px;
+
+            font-family: Consolas, monospace;
+
+            font-size: 12px;
+
+            color: #555;
+        }
+
+
+        /* =========================
+           BUTTON
+           ========================= */
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 10px 16px;
+
+            border-radius: 5px;
+
+            border: none;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+
+        .btn-primary {
+
+            background: #1f3c88;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+
+            background: #162e68;
+        }
+
+
+        /* =========================
+           FOOTER NOTE
+           ========================= */
+
+        .footer-note {
+
+            background: white;
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border-radius: 6px;
+
+            box-shadow:
+                0 2px 7px rgba(0, 0, 0, 0.06);
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+
+
+            .report-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+
+                width: 96%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <div class="header">
+
+        <h1>
+            Clinic Management System
+        </h1>
+
+
+        <div class="header-right">
+
+            <span>
+
+                {{ session["full_name"] }}
+
+                ({{ session["role"] }})
+
+            </span>
+
+
+            <a href="{{ url_for('dashboard') }}">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+         ===================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================
+             PAGE TITLE
+             ================================= -->
+
+        <div class="page-title">
+
+            <h2>
+                Report Generation
+            </h2>
+
+            <p>
+                Generate clinic reports and download
+                them as CSV files.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================
+             FLASH MESSAGES
+             ================================= -->
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="
+                            message
+                            {% if category == 'error' %}
+                                error
+                            {% endif %}
+                        "
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- =================================
+             INFORMATION
+             ================================= -->
+
+        <div class="info-box">
+
+            <strong>Admin Access:</strong>
+
+            Reports are available only to the Admin.
+
+            Each report is generated from the current
+            clinic database and returned as a CSV file.
+
+        </div>
+
+
+
+        <!-- =================================
+             REPORT CARDS
+             ================================= -->
+
+        <div class="report-grid">
+
+
+            <!-- =================================
+                 1. TODAY'S APPOINTMENTS
+                 ================================= -->
+
+            <div class="report-card">
+
+
+                <div class="report-icon">
+                    1
+                </div>
+
+
+                <h3>
+                    Today's Appointments
+                </h3>
+
+
+                <p>
+
+                    Generate a report containing the
+                    appointments scheduled for today,
+                    including patient, doctor, date,
+                    time and appointment details.
+
+                </p>
+
+
+                <div class="filename">
+
+                    today_appointments.csv
+
+                </div>
+
+
+                <a
+                    href="{{ url_for(
+                        'today_appointments_report'
+                    ) }}"
+                    class="btn btn-primary"
+                >
+
+                    Generate Report
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 2. DOCTOR REPORT
+                 ================================= -->
+
+            <div class="report-card">
+
+
+                <div class="report-icon">
+                    2
+                </div>
+
+
+                <h3>
+                    Doctor Report
+                </h3>
+
+
+                <p>
+
+                    Generate a doctor-wise report containing
+                    doctor information, specialization,
+                    status and consultation details.
+
+                </p>
+
+
+                <div class="filename">
+
+                    doctor_report.csv
+
+                </div>
+
+
+                <a
+                    href="{{ url_for(
+                        'doctor_report'
+                    ) }}"
+                    class="btn btn-primary"
+                >
+
+                    Generate Report
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 3. PATIENT HISTORY
+                 ================================= -->
+
+            <div class="report-card">
+
+
+                <div class="report-icon">
+                    3
+                </div>
+
+
+                <h3>
+                    Patient History
+                </h3>
+
+
+                <p>
+
+                    Generate a patient appointment-history
+                    report containing appointments and
+                    related patient information.
+
+                </p>
+
+
+                <div class="filename">
+
+                    patient_history.csv
+
+                </div>
+
+
+                <a
+                    href="{{ url_for(
+                        'patient_history_report'
+                    ) }}"
+                    class="btn btn-primary"
+                >
+
+                    Generate Report
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 4. REVENUE REPORT
+                 ================================= -->
+
+            <div class="report-card">
+
+
+                <div class="report-icon">
+                    4
+                </div>
+
+
+                <h3>
+                    Revenue Report
+                </h3>
+
+
+                <p>
+
+                    Generate a revenue report using
+                    recorded clinic payments, including
+                    appointment and payment information.
+
+                </p>
+
+
+                <div class="filename">
+
+                    revenue_report.csv
+
+                </div>
+
+
+                <a
+                    href="{{ url_for(
+                        'revenue_report'
+                    ) }}"
+                    class="btn btn-primary"
+                >
+
+                    Generate Report
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 5. MONTHLY CLINIC REPORT
+                 ================================= -->
+
+            <div class="report-card">
+
+
+                <div class="report-icon">
+                    5
+                </div>
+
+
+                <h3>
+                    Monthly Clinic Report
+                </h3>
+
+
+                <p>
+
+                    Generate a month-wise clinic report
+                    summarizing appointment activity and
+                    clinic revenue.
+
+                </p>
+
+
+                <div class="filename">
+
+                    monthly_clinic_report.csv
+
+                </div>
+
+
+                <a
+                    href="{{ url_for(
+                        'monthly_report'
+                    ) }}"
+                    class="btn btn-primary"
+                >
+
+                    Generate Report
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             NOTE
+             ================================= -->
+
+        <div class="footer-note">
+
+            <strong>CSV Reports:</strong>
+
+            The generated files can be opened using
+            Microsoft Excel, LibreOffice Calc or any
+            other spreadsheet application that supports
+            CSV files.
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

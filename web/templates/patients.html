@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Patient Management - Clinic Management
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f1f5f9;
+
+            color: #0f172a;
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .header {
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .brand-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            background: #0f766e;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 26px;
+        }
+
+
+        .brand-name {
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        .user-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .user-info {
+
+            text-align: right;
+        }
+
+
+        .user-name {
+
+            font-size: 17px;
+
+            font-weight: bold;
+        }
+
+
+        .user-role {
+
+            font-size: 13px;
+
+            color: #cbd5e1;
+
+            margin-top: 3px;
+        }
+
+
+        .logout-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: #334155;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .logout-btn:hover {
+
+            background: #475569;
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        .container {
+
+            max-width: 1450px;
+
+            margin: 45px auto;
+
+            padding: 0 30px;
+        }
+
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .page-title h1 {
+
+            margin: 0;
+
+            font-size: 34px;
+        }
+
+
+        .page-title p {
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        .back-link {
+
+            text-decoration: none;
+
+            color: #0f766e;
+
+            font-weight: bold;
+        }
+
+
+        /* =================================================
+           CARD
+        ================================================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15, 23, 42, 0.07);
+
+            overflow: hidden;
+        }
+
+
+        .card-header {
+
+            padding: 24px 28px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .card-title {
+
+            margin: 0;
+
+            font-size: 21px;
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .patient-count {
+
+            color: #64748b;
+        }
+
+
+        /* =================================================
+           ADD BUTTON
+        ================================================= */
+
+        .add-btn {
+
+            background: #0f766e;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .add-btn:hover {
+
+            background: #115e59;
+        }
+
+
+        /* =================================================
+           FLASH
+        ================================================= */
+
+        .flash-container {
+
+            margin-bottom: 20px;
+        }
+
+
+        .flash {
+
+            padding: 14px 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 10px;
+
+            font-size: 15px;
+        }
+
+
+        .flash-success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+
+        .flash-error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        /* =================================================
+           TABLE
+        ================================================= */
+
+        .table-container {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+
+        th {
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            text-align: left;
+
+            padding: 18px 22px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+        }
+
+
+        td {
+
+            padding: 20px 22px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+
+            font-size: 15px;
+        }
+
+
+        tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        .patient-name {
+
+            font-weight: bold;
+        }
+
+
+        .phone {
+
+            color: #475569;
+        }
+
+
+        .gender {
+
+            color: #334155;
+        }
+
+
+        /* =================================================
+           EMPTY
+        ================================================= */
+
+        .empty-state {
+
+            padding: 55px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 800px) {
+
+            .header {
+
+                padding: 15px 20px;
+            }
+
+
+            .container {
+
+                padding: 0 15px;
+
+                margin-top: 30px;
+            }
+
+
+            .page-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .user-info {
+
+                display: none;
+            }
+
+
+            .brand-name {
+
+                font-size: 20px;
+            }
+
+
+            .card-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .header-actions {
+
+                width: 100%;
+
+                justify-content: space-between;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🏥
+            </div>
+
+            <div class="brand-name">
+                Clinic Management
+            </div>
+
+        </div>
+
+
+        <div class="user-area">
+
+            <div class="user-info">
+
+                <div class="user-name">
+                    {{ session["full_name"] }}
+                </div>
+
+                <div class="user-role">
+                    {{ session["role"] }}
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <main class="container">
+
+
+        <div class="page-header">
+
+            <div class="page-title">
+
+                <h1>
+                    Patient Management
+                </h1>
+
+                <p>
+                    View and manage registered patients.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="back-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================= -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="
+                                flash
+                                flash-{{ category }}
+                            "
+                        >
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             PATIENT CARD
+        ================================================= -->
+
+        <div class="card">
+
+
+            <div class="card-header">
+
+                <h2 class="card-title">
+                    Patients
+                </h2>
+
+
+                <div class="header-actions">
+
+
+                    <div class="patient-count">
+
+                        {{ patients|length }}
+                        patient(s)
+
+                    </div>
+
+
+                    <!--
+                        ONLY RECEPTIONIST
+                        CAN ADD PATIENTS
+                    -->
+
+                    {% if session["role"] == "Receptionist" %}
+
+                        <a
+                            href="{{ url_for('add_patient') }}"
+                            class="add-btn"
+                        >
+                            + Add New Patient
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PATIENT DATA
+            ================================================= -->
+
+            {% if patients %}
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Patient Name
+                                </th>
+
+                                <th>
+                                    Phone
+                                </th>
+
+                                <th>
+                                    Gender
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for patient in patients %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ patient[0] }}
+                                    </td>
+
+
+                                    <td class="patient-name">
+                                        {{ patient[1] }}
+                                    </td>
+
+
+                                    <td class="phone">
+                                        {{ patient[2] }}
+                                    </td>
+
+
+                                    <td class="gender">
+                                        {{ patient[3] }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            {% else %}
+
+
+                <div class="empty-state">
+
+                    No patients found.
+
+                </div>
+
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Record Payment - Clinic Management System
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+
+            background: #1f3c88;
+
+            color: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .header h1 {
+
+            font-size: 24px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .header-right a {
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            padding: 8px 14px;
+
+            border-radius: 5px;
+        }
+
+
+        .header-right a:hover {
+
+            background: #5a6268;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 850px;
+
+            margin: 35px auto;
+        }
+
+
+        /* =========================
+           PAGE TITLE
+           ========================= */
+
+        .page-title {
+
+            margin-bottom: 20px;
+        }
+
+
+        .page-title h2 {
+
+            color: #1f3c88;
+
+            margin-bottom: 5px;
+        }
+
+
+        .page-title p {
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FLASH MESSAGES
+           ========================= */
+
+        .message {
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            background: #dff0d8;
+
+            color: #3c763d;
+
+            border: 1px solid #c3e6cb;
+        }
+
+
+        .error {
+
+            background: #f8d7da;
+
+            color: #721c24;
+
+            border-color: #f5c6cb;
+        }
+
+
+        /* =========================
+           INFO BOX
+           ========================= */
+
+        .info-box {
+
+            background: white;
+
+            border-left: 5px solid #1f3c88;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.08);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FORM CARD
+           ========================= */
+
+        .form-card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .section-title {
+
+            color: #1f3c88;
+
+            font-size: 18px;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 8px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        /* =========================
+           FORM
+           ========================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .required {
+
+            color: #d9534f;
+        }
+
+
+        select {
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            background: white;
+        }
+
+
+        select:focus {
+
+            outline: none;
+
+            border-color: #1f3c88;
+
+            box-shadow:
+                0 0 0 2px rgba(31, 60, 136, 0.1);
+        }
+
+
+        .help-text {
+
+            font-size: 12px;
+
+            color: #777;
+
+            margin-top: 6px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           PAYMENT DETAILS
+           ========================= */
+
+        .payment-preview {
+
+            display: none;
+
+            background: #f8f9fa;
+
+            border: 1px solid #ddd;
+
+            border-radius: 6px;
+
+            padding: 18px;
+
+            margin-top: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .payment-preview-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .preview-item {
+
+            padding: 5px 0;
+        }
+
+
+        .preview-label {
+
+            font-size: 11px;
+
+            color: #777;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+
+        .preview-value {
+
+            font-size: 15px;
+
+            color: #333;
+        }
+
+
+        .amount-box {
+
+            margin-top: 18px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #ddd;
+
+            text-align: right;
+        }
+
+
+        .amount-label {
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        .amount-value {
+
+            color: #1f3c88;
+
+            font-size: 26px;
+
+            font-weight: bold;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================
+           PAYMENT METHOD
+           ========================= */
+
+        .payment-methods {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 8px;
+        }
+
+
+        .payment-method-option {
+
+            position: relative;
+        }
+
+
+        .payment-method-option input {
+
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .payment-method-option label {
+
+            display: block;
+
+            text-align: center;
+
+            padding: 13px 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            background: #fff;
+
+            font-weight: normal;
+
+            transition: 0.2s;
+        }
+
+
+        .payment-method-option label:hover {
+
+            border-color: #1f3c88;
+
+            background: #f5f7fc;
+        }
+
+
+        .payment-method-option input:checked + label {
+
+            border-color: #1f3c88;
+
+            background: #eef3ff;
+
+            color: #1f3c88;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           BUTTONS
+           ========================= */
+
+        .button-row {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .btn-primary {
+
+            background: #1f3c88;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+
+            background: #162e68;
+        }
+
+
+        .btn-secondary {
+
+            background: #6c757d;
+
+            color: white;
+        }
+
+
+        .btn-secondary:hover {
+
+            background: #5a6268;
+        }
+
+
+        /* =========================
+           NO APPOINTMENT STATE
+           ========================= */
+
+        .no-data {
+
+            background: #fff3cd;
+
+            border: 1px solid #ffeeba;
+
+            color: #856404;
+
+            padding: 18px;
+
+            border-radius: 5px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+
+
+            .payment-preview-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .payment-methods {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-card {
+
+                padding: 20px;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+
+            .button-row .btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <div class="header">
+
+        <h1>
+            Clinic Management System
+        </h1>
+
+
+        <div class="header-right">
+
+            <span>
+
+                {{ session["full_name"] }}
+
+                ({{ session["role"] }})
+
+            </span>
+
+
+            <a href="{{ url_for('payments') }}">
+
+                Back to Payments
+
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MAIN
+         ===================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================
+             TITLE
+             ================================= -->
+
+        <div class="page-title">
+
+            <h2>
+                Record Payment
+            </h2>
+
+            <p>
+                Record payment for a completed appointment.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================
+             FLASH MESSAGES
+             ================================= -->
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="
+                            message
+                            {% if category == 'error' %}
+                                error
+                            {% endif %}
+                        "
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+
+        <!-- =================================
+             INFORMATION
+             ================================= -->
+
+        <div class="info-box">
+
+            <strong>Payment Rules</strong>
+
+            <br>
+
+            Only completed appointments can receive
+            a payment.
+
+            <br>
+
+            Each appointment can have only one payment.
+
+            <br>
+
+            The amount is automatically determined from
+            the doctor's consultation fee.
+
+            <br>
+
+            Select the payment method used by the patient.
+
+        </div>
+
+
+
+        {% if appointments %}
+
+
+            <!-- =================================
+                 FORM CARD
+                 ================================= -->
+
+            <div class="form-card">
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('add_payment') }}"
+                    id="paymentForm"
+                >
+
+
+                    <!-- =========================
+                         APPOINTMENT
+                         ========================= -->
+
+                    <div class="section-title">
+
+                        Completed Appointment
+
+                    </div>
+
+
+                    <div class="form-group">
+
+
+                        <label for="appointment_id">
+
+                            Appointment
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <select
+                            id="appointment_id"
+                            name="appointment_id"
+                            required
+                        >
+
+                            <option value="">
+                                Select Completed Appointment
+                            </option>
+
+
+                            {% for appointment in appointments %}
+
+                                <!--
+                                    Expected structure:
+
+                                    appointment[0]
+                                        appointment_id
+
+                                    appointment[1]
+                                        patient_name
+
+                                    appointment[2]
+                                        doctor_name
+
+                                    appointment[3]
+                                        appointment_date
+
+                                    appointment[4]
+                                        appointment_time
+
+                                    appointment[5]
+                                        consultation_fee
+                                -->
+
+                                <option
+                                    value="{{ appointment[0] }}"
+                                    data-patient="{{ appointment[1] }}"
+                                    data-doctor="{{ appointment[2] }}"
+                                    data-date="{{ appointment[3] }}"
+                                    data-time="{{ appointment[4] }}"
+                                    data-fee="{{ appointment[5] }}"
+                                >
+
+                                    #{{ appointment[0] }}
+
+                                    -
+                                    {{ appointment[1] }}
+
+                                    -
+
+                                    {{ appointment[2] }}
+
+                                    -
+
+                                    {{ appointment[3] }}
+
+                                    {{ appointment[4] }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+
+                        <div class="help-text">
+
+                            Only completed appointments
+                            without an existing payment are shown.
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PAYMENT PREVIEW
+                         ========================= -->
+
+                    <div
+                        id="paymentPreview"
+                        class="payment-preview"
+                    >
+
+
+                        <div
+                            class="payment-preview-grid"
+                        >
+
+
+                            <!-- PATIENT -->
+
+                            <div class="preview-item">
+
+                                <div class="preview-label">
+
+                                    Patient
+
+                                </div>
+
+
+                                <div
+                                    id="patientValue"
+                                    class="preview-value"
+                                >
+
+                                    -
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- DOCTOR -->
+
+                            <div class="preview-item">
+
+                                <div class="preview-label">
+
+                                    Doctor
+
+                                </div>
+
+
+                                <div
+                                    id="doctorValue"
+                                    class="preview-value"
+                                >
+
+                                    -
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- DATE -->
+
+                            <div class="preview-item">
+
+                                <div class="preview-label">
+
+                                    Appointment Date
+
+                                </div>
+
+
+                                <div
+                                    id="dateValue"
+                                    class="preview-value"
+                                >
+
+                                    -
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- TIME -->
+
+                            <div class="preview-item">
+
+                                <div class="preview-label">
+
+                                    Appointment Time
+
+                                </div>
+
+
+                                <div
+                                    id="timeValue"
+                                    class="preview-value"
+                                >
+
+                                    -
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- AMOUNT -->
+
+                        <div class="amount-box">
+
+                            <div class="amount-label">
+
+                                Consultation Amount
+
+                            </div>
+
+
+                            <div
+                                id="amountValue"
+                                class="amount-value"
+                            >
+
+                                ₹0.00
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PAYMENT METHOD
+                         ========================= -->
+
+                    <div class="section-title">
+
+                        Payment Method
+
+                    </div>
+
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            Select Payment Method
+
+                            <span class="required">*</span>
+
+                        </label>
+
+
+                        <div class="payment-methods">
+
+
+                            <!-- CASH -->
+
+                            <div
+                                class="payment-method-option"
+                            >
+
+                                <input
+                                    type="radio"
+                                    id="cash"
+                                    name="payment_method"
+                                    value="Cash"
+                                    required
+                                >
+
+
+                                <label for="cash">
+
+                                    Cash
+
+                                </label>
+
+                            </div>
+
+
+
+                            <!-- UPI -->
+
+                            <div
+                                class="payment-method-option"
+                            >
+
+                                <input
+                                    type="radio"
+                                    id="upi"
+                                    name="payment_method"
+                                    value="UPI"
+                                    required
+                                >
+
+
+                                <label for="upi">
+
+                                    UPI
+
+                                </label>
+
+                            </div>
+
+
+
+                            <!-- CARD -->
+
+                            <div
+                                class="payment-method-option"
+                            >
+
+                                <input
+                                    type="radio"
+                                    id="card"
+                                    name="payment_method"
+                                    value="Card"
+                                    required
+                                >
+
+
+                                <label for="card">
+
+                                    Card
+
+                                </label>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="help-text">
+
+                            Choose the method used to
+                            receive the payment.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         BUTTONS
+                         ========================= -->
+
+                    <div class="button-row">
+
+
+                        <a
+                            href="{{ url_for('payments') }}"
+                            class="btn btn-secondary"
+                        >
+
+                            Cancel
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            Record Payment
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================
+                 NO PAYABLE APPOINTMENTS
+                 ================================= -->
+
+            <div class="no-data">
+
+                <strong>
+                    No completed appointments available
+                    for payment.
+                </strong>
+
+                <br><br>
+
+                A payment can be recorded only when:
+
+                <br>
+
+                1. The appointment is completed.
+
+                <br>
+
+                2. The appointment does not already
+                   have a payment.
+
+                <br><br>
+
+                <a
+                    href="{{ url_for('payments') }}"
+                    class="btn btn-secondary"
+                >
+
+                    Back to Payments
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+         ===================================== -->
+
+    <script>
+
+
+        /*
+         * Appointment selector
+         */
+
+        const appointmentSelect =
+            document.getElementById(
+                "appointment_id"
+            );
+
+
+        const paymentPreview =
+            document.getElementById(
+                "paymentPreview"
+            );
+
+
+        const patientValue =
+            document.getElementById(
+                "patientValue"
+            );
+
+
+        const doctorValue =
+            document.getElementById(
+                "doctorValue"
+            );
+
+
+        const dateValue =
+            document.getElementById(
+                "dateValue"
+            );
+
+
+        const timeValue =
+            document.getElementById(
+                "timeValue"
+            );
+
+
+        const amountValue =
+            document.getElementById(
+                "amountValue"
+            );
+
+
+
+        /*
+         * Display appointment details
+         * after selection.
+         */
+
+        if (appointmentSelect) {
+
+            appointmentSelect.addEventListener(
+                "change",
+                function() {
+
+
+                    const option =
+                        this.options[
+                            this.selectedIndex
+                        ];
+
+
+                    if (
+                        !this.value
+                    ) {
+
+                        paymentPreview.style.display =
+                            "none";
+
+                        return;
+
+                    }
+
+
+                    const patient =
+                        option.getAttribute(
+                            "data-patient"
+                        );
+
+
+                    const doctor =
+                        option.getAttribute(
+                            "data-doctor"
+                        );
+
+
+                    const date =
+                        option.getAttribute(
+                            "data-date"
+                        );
+
+
+                    const time =
+                        option.getAttribute(
+                            "data-time"
+                        );
+
+
+                    const fee =
+                        option.getAttribute(
+                            "data-fee"
+                        );
+
+
+                    patientValue.textContent =
+                        patient || "-";
+
+
+                    doctorValue.textContent =
+                        doctor || "-";
+
+
+                    dateValue.textContent =
+                        date || "-";
+
+
+                    timeValue.textContent =
+                        time || "-";
+
+
+                    const numericFee =
+                        parseFloat(fee);
+
+
+                    if (
+                        !isNaN(numericFee)
+                    ) {
+
+                        amountValue.textContent =
+                            "₹" +
+                            numericFee.toFixed(2);
+
+                    } else {
+
+                        amountValue.textContent =
+                            "₹0.00";
+
+                    }
+
+
+                    paymentPreview.style.display =
+                        "block";
+
+                }
+            );
+
+        }
+
+
+
+        /*
+         * Form validation.
+         */
+
+        const paymentForm =
+            document.getElementById(
+                "paymentForm"
+            );
+
+
+        if (paymentForm) {
+
+            paymentForm.addEventListener(
+                "submit",
+                function(event) {
+
+
+                    /*
+                     * Check appointment.
+                     */
+
+                    if (
+                        !appointmentSelect.value
+                    ) {
+
+                        alert(
+                            "Please select a completed appointment."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Check payment method.
+                     */
+
+                    const selectedMethod =
+                        document.querySelector(
+                            'input[name="payment_method"]:checked'
+                        );
+
+
+                    if (!selectedMethod) {
+
+                        alert(
+                            "Please select a payment method."
+                        );
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

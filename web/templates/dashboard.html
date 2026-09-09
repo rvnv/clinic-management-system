@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Dashboard - Clinic Management System
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #333;
+        }
+
+
+        /* =====================================
+           HEADER
+           ===================================== */
+
+        .header {
+
+            background: #1f3c88;
+
+            color: white;
+
+            padding: 18px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+
+        .header h1 {
+
+            font-size: 24px;
+
+            font-weight: 600;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            font-size: 14px;
+        }
+
+
+        .user-info {
+
+            text-align: right;
+        }
+
+
+        .user-name {
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .user-role {
+
+            font-size: 12px;
+
+            opacity: 0.85;
+
+            margin-top: 3px;
+        }
+
+
+        .logout-btn {
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #d9534f;
+
+            padding: 9px 15px;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+        }
+
+
+        .logout-btn:hover {
+
+            background: #c9302c;
+        }
+
+
+
+        /* =====================================
+           MAIN CONTAINER
+           ===================================== */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1350px;
+
+            margin: 35px auto;
+        }
+
+
+
+        /* =====================================
+           WELCOME SECTION
+           ===================================== */
+
+        .welcome {
+
+            margin-bottom: 25px;
+        }
+
+
+        .welcome h2 {
+
+            color: #1f3c88;
+
+            font-size: 25px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .welcome p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+
+        /* =====================================
+           FLASH MESSAGES
+           ===================================== */
+
+        .message {
+
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 5px;
+
+            background: #dff0d8;
+
+            color: #3c763d;
+
+            border: 1px solid #c3e6cb;
+        }
+
+
+        .error {
+
+            background: #f8d7da;
+
+            color: #721c24;
+
+            border-color: #f5c6cb;
+        }
+
+
+
+        /* =====================================
+           STATISTICS
+           ===================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+
+            border-left: 5px solid #1f3c88;
+        }
+
+
+        .stat-label {
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .stat-value {
+
+            color: #1f3c88;
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .stat-description {
+
+            color: #888;
+
+            font-size: 12px;
+
+            margin-top: 6px;
+        }
+
+
+
+        /* =====================================
+           SECTION TITLE
+           ===================================== */
+
+        .section-title {
+
+            color: #1f3c88;
+
+            font-size: 20px;
+
+            margin-bottom: 15px;
+        }
+
+
+
+        /* =====================================
+           MENU GRID
+           ===================================== */
+
+        .menu-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .menu-card {
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+
+            text-decoration: none;
+
+            color: #333;
+
+            border: 1px solid #eee;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+
+        .menu-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, 0.12);
+
+            border-color: #d9e1f2;
+        }
+
+
+        .menu-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: #eef3ff;
+
+            color: #1f3c88;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+
+        .menu-card h3 {
+
+            color: #1f3c88;
+
+            font-size: 17px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .menu-card p {
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+
+        /* =====================================
+           ROLE BADGE
+           ===================================== */
+
+        .role-badge {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            background: #eef3ff;
+
+            color: #1f3c88;
+
+            border-radius: 12px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+        }
+
+
+
+        /* =====================================
+           EMPTY / INFORMATION
+           ===================================== */
+
+        .info-box {
+
+            background: white;
+
+            border-left: 5px solid #1f3c88;
+
+            padding: 15px;
+
+            margin-top: 25px;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 2px 5px rgba(0, 0, 0, 0.06);
+
+            font-size: 13px;
+
+            color: #666;
+
+            line-height: 1.6;
+        }
+
+
+
+        /* =====================================
+           RESPONSIVE
+           ===================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .menu-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .header-right {
+
+                width: 100%;
+
+                justify-content: space-between;
+            }
+
+
+            .user-info {
+
+                text-align: left;
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .menu-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .container {
+
+                width: 96%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <div class="header">
+
+
+        <h1>
+            Clinic Management System
+        </h1>
+
+
+        <div class="header-right">
+
+
+            <div class="user-info">
+
+                <div class="user-name">
+
+                    {{ session["full_name"] }}
+
+                </div>
+
+
+                <div class="user-role">
+
+                    Logged in as
+                    {{ session["role"] }}
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-btn"
+            >
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MAIN CONTENT
+         ===================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================
+             WELCOME
+             ================================= -->
+
+        <div class="welcome">
+
+            <h2>
+
+                Welcome,
+                {{ session["full_name"] }}
+
+            </h2>
+
+
+            <p>
+
+                This is your Clinic Management System
+                dashboard.
+
+            </p>
+
+
+            <span class="role-badge">
+
+                {{ session["role"] }}
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================
+             FLASH MESSAGES
+             ================================= -->
+
+        {% with messages =
+            get_flashed_messages(
+                with_categories=true
+            )
+        %}
+
+
+            {% if messages %}
+
+
+                {% for category, message in messages %}
+
+
+                    <div
+                        class="
+                            message
+
+                            {% if category == 'error' %}
+                                error
+                            {% endif %}
+                        "
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% endif %}
+
+
+        {% endwith %}
+
+
+
+        <!-- =====================================
+             COMMON STATISTICS
+             ===================================== -->
+
+        <div class="stats-grid">
+
+
+            <!-- ACTIVE DOCTORS -->
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+
+                    Active Doctors
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {{ active_doctors }}
+
+                </div>
+
+
+                <div class="stat-description">
+
+                    Currently active doctors
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PATIENTS -->
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+
+                    Total Patients
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {{ total_patients }}
+
+                </div>
+
+
+                <div class="stat-description">
+
+                    Registered clinic patients
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ADMIN / RECEPTIONIST APPOINTMENTS -->
+
+            {% if session["role"] == "Admin"
+                  or session["role"] == "Receptionist" %}
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Total Appointments
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        {{ total_appointments }}
+
+                    </div>
+
+
+                    <div class="stat-description">
+
+                        Appointment records
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+
+            <!-- ADMIN REVENUE -->
+
+            {% if session["role"] == "Admin" %}
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Total Revenue
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        ₹{{ "%.2f"|format(
+                            total_revenue|float
+                        ) }}
+
+                    </div>
+
+
+                    <div class="stat-description">
+
+                        Recorded clinic payments
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+
+            <!-- RECEPTIONIST TODAY -->
+
+            {% if session["role"] == "Receptionist" %}
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Today's Appointments
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        {{ today_appointments }}
+
+                    </div>
+
+
+                    <div class="stat-description">
+
+                        Appointments scheduled today
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+
+            <!-- DOCTOR APPOINTMENTS -->
+
+            {% if session["role"] == "Doctor" %}
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        My Appointments
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        {{ doctor_appointments }}
+
+                    </div>
+
+
+                    <div class="stat-description">
+
+                        Appointments assigned to you
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOCTOR REVENUE -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        My Consultation Revenue
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        ₹{{ "%.2f"|format(
+                            doctor_revenue|float
+                        ) }}
+
+                    </div>
+
+
+                    <div class="stat-description">
+
+                        Revenue from recorded payments
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             ADMIN MENU
+             ===================================== -->
+
+        {% if session["role"] == "Admin" %}
+
+
+            <div class="section-title">
+
+                Administration
+
+            </div>
+
+
+            <div class="menu-grid">
+
+
+                <!-- DOCTORS -->
+
+                <a
+                    href="{{ url_for('doctors') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        D
+                    </div>
+
+
+                    <h3>
+                        Doctor Management
+                    </h3>
+
+
+                    <p>
+
+                        Add, view, edit, activate,
+                        deactivate and delete doctors.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- PATIENTS -->
+
+                <a
+                    href="{{ url_for('patients') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        P
+                    </div>
+
+
+                    <h3>
+                        Patient View
+                    </h3>
+
+
+                    <p>
+
+                        View registered patient
+                        information.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- APPOINTMENTS -->
+
+                <a
+                    href="{{ url_for('appointments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        A
+                    </div>
+
+
+                    <h3>
+                        Appointment Management
+                    </h3>
+
+
+                    <p>
+
+                        View clinic appointment
+                        records.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- PAYMENTS -->
+
+                <a
+                    href="{{ url_for('payments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        $
+                    </div>
+
+
+                    <h3>
+                        Payment Management
+                    </h3>
+
+
+                    <p>
+
+                        View recorded clinic
+                        payments and revenue.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- REPORTS -->
+
+                <a
+                    href="{{ url_for('reports') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        R
+                    </div>
+
+
+                    <h3>
+                        Reports
+                    </h3>
+
+
+                    <p>
+
+                        Generate today's,
+                        doctor, patient history,
+                        revenue and monthly reports.
+
+                    </p>
+
+                </a>
+
+
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Admin:</strong>
+
+                You have access to clinic administration,
+                doctor management, patient viewing,
+                appointment viewing, payment viewing
+                and report generation.
+
+            </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =====================================
+             RECEPTIONIST MENU
+             ===================================== -->
+
+        {% if session["role"] == "Receptionist" %}
+
+
+            <div class="section-title">
+
+                Reception Desk
+
+            </div>
+
+
+            <div class="menu-grid">
+
+
+                <!-- PATIENTS -->
+
+                <a
+                    href="{{ url_for('patients') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        P
+                    </div>
+
+
+                    <h3>
+                        Patient Management
+                    </h3>
+
+
+                    <p>
+
+                        Add, view, edit and delete
+                        patient records.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- APPOINTMENTS -->
+
+                <a
+                    href="{{ url_for('appointments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        A
+                    </div>
+
+
+                    <h3>
+                        Appointment Management
+                    </h3>
+
+
+                    <p>
+
+                        Book, view and cancel
+                        appointments.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- PAYMENTS -->
+
+                <a
+                    href="{{ url_for('payments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        $
+                    </div>
+
+
+                    <h3>
+                        Payment Management
+                    </h3>
+
+
+                    <p>
+
+                        Record payments for completed
+                        appointments and view payments.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- DOCTORS -->
+
+                <a
+                    href="{{ url_for('doctors') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        D
+                    </div>
+
+
+                    <h3>
+                        Doctors
+                    </h3>
+
+
+                    <p>
+
+                        View currently active doctors
+                        and consultation fees.
+
+                    </p>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Receptionist:</strong>
+
+                You manage patient registration,
+                appointments and payment collection.
+                Doctor administration is handled by
+                the Admin.
+
+            </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =====================================
+             DOCTOR MENU
+             ===================================== -->
+
+        {% if session["role"] == "Doctor" %}
+
+
+            <div class="section-title">
+
+                Doctor Workspace
+
+            </div>
+
+
+            <div class="menu-grid">
+
+
+                <!-- MY APPOINTMENTS -->
+
+                <a
+                    href="{{ url_for('my_appointments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        A
+                    </div>
+
+
+                    <h3>
+                        My Appointments
+                    </h3>
+
+
+                    <p>
+
+                        View appointments assigned
+                        to you.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- COMPLETE APPOINTMENT -->
+
+                <a
+                    href="{{ url_for('my_appointments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        C
+                    </div>
+
+
+                    <h3>
+                        Complete Appointment
+                    </h3>
+
+
+                    <p>
+
+                        Mark your scheduled appointments
+                        as completed after consultation.
+
+                    </p>
+
+                </a>
+
+
+
+                <!-- CONSULTATION NOTES -->
+
+                <a
+                    href="{{ url_for('my_appointments') }}"
+                    class="menu-card"
+                >
+
+                    <div class="menu-icon">
+                        N
+                    </div>
+
+
+                    <h3>
+                        Consultation Notes
+                    </h3>
+
+
+                    <p>
+
+                        Add or update consultation notes
+                        for your appointments.
+
+                    </p>
+
+                </a>
+
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Doctor:</strong>
+
+                You can access only your assigned
+                appointments and maintain consultation
+                notes for those appointments.
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</body>
+
+</html>
